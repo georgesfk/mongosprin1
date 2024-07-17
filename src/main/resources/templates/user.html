@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mongo Data Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            perspective: 1000px;
+            flex: 1;
+        }
+
+        .card {
+            background-color: lightblue;
+            border: 1px solid lightblue;
+            padding: 20px;
+            margin: 10px;
+            width: 200px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 0.8s ease-in-out, box-shadow 0.8s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: rotateY(180deg) scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .card .front, .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card .front {
+            transform: rotateY(0deg);
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .card .back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .actor-photo {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Mongo Data Visualization</h1>
+</header>
+
+<div class="container">
+    <!-- data will be rendered here -->
+</div>
+
+<footer>
+    <p>&copy; 2024 Mongo Data Visualization. All rights reserved.</p>
+</footer>
+
+<script>
+    const data = [
+        {
+            "id": 1,
+            "firstName": "Robert",
+            "lastName": "Downey Jr.",
+            "age": 56,
+            "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE5_fhgs_IZExj92k7fpmWwg3DAsEDlcAeaxKf7HiH6mg7OhJL"
+        },
+        {
+            "id": 2,
+            "firstName": "Chris",
+            "lastName": "Hemsworth",
+            "age": 37,
+            "photo": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQ9RA5K6V65sYk__JisnF17XGbxkMWJniAt_7rT8sIi7U6OGIpk"
+        },
+        {
+            "id": 3,
+            "firstName": "Scarlett",
+            "lastName": "Johansson",
+            "age": 36,
+            "photo": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQm3MEMDBjlSfqxDYePA5YJuuj2o0bAqvn4xDcFivsMc87cQyFITOp3eT-mKjs-QDZe6nSSxM_7p7f-Hww"
+        },
+        {
+            "id": 4,
+            "firstName": "Denzel",
+            "lastName": "Washington",
+            "age": 66,
+            "photo": "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRGKNh649EKgtJZISnAZHsBFBJDHYw8iE1bsIoDe2X0Ay8d8rYF1bsy1SVVkXJrHr4TFabWHloB8QamXYA"
+        },
+        {
+            "id": 5,
+            "firstName": "Meryl",
+            "lastName": "Streep",
+            "age": 72,
+            "photo": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQiEzHttrpAETkrCgHqyfwpidkqh9MTH3DCBp_3ir2Hu_bjh20xUnuXrz5KdxdcKx_GeYuQosRZxowZ4hY"
+        },
+        {
+            "id": 6,
+            "firstName": "Leonardo",
+            "lastName": "DiCaprio",
+            "age": 46,
+            "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR9I8VvUb5aasWHuAXCsrmdAekW_X2QsKL1GrgNWKzooRd1Ngb"
+        },
+        {
+            "id": 7,
+            "firstName": "Tom",
+            "lastName": "Hanks",
+            "age": 65,
+            "photo": "https://cdn-elle.ladmedia.fr/var/plain_site/storage/images/personnalites/tom-hanks/10047341-1-fre-FR/tom_hanks.jpg"
+        },
+        {
+            "id": 8,
+            "firstName": "Jennifer",
+            "lastName": "Lawrence",
+            "age": 30,
+            "photo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRHtjmszL1QKGQcJrINk7u-moIdBaQ89aYT-4_QIzfB5x6M5Nf1"
+        },
+        {
+            "id": 9,
+            "firstName": "Will",
+            "lastName": "Smith",
+            "age": 52,
+            "photo": "https://www.gala.fr/imgre/fit/~1~gal~2023~10~12~41b24ed1-0afa-4c1d-95f8-fcefe2476715.jpeg/3576x3150/quality/80/will-smith.jpeg"
+        },
+        {
+            "id": 10,
+            "firstName": "Natalie",
+            "lastName": "Portman",
+            "age": 40,
+            "photo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ-J1qpn4JMjWan-EE-gKbN4si_-94UX89--Qx7Ugq-qZn63OXg"
+        },
+        {
+            "id": 11,
+            "firstName": "Morgan",
+            "lastName": "Freeman",
+            "age": 83,
+            "photo": "https://fr.web.img6.acsta.net/c_310_420/pictures/18/09/20/15/21/3966896.jpg"
+        },
+        {
+            "id": 12,
+            "firstName": "Emma",
+            "lastName": "Stone",
+            "age": 32,
+            "photo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSPhO3N-sfpo8ZePEgYDB0munw7FEXtRtxFedRveJTM2roDMGkO"
+        },
+        {
+            "id": 13,
+            "firstName": "Brad",
+            "lastName": "Pitt",
+            "age": 57,
+            "photo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQovT7YbNJpTr9fX3mTNhprhb3uVADoz-LQF_92BrgS6hOVKzUA"
+        },
+        {
+            "id": 14,
+            "firstName": "Gal",
+            "lastName": "Gadot",
+            "age": 35,
+            "photo": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQn01qluqWvOFoKI8IjcMJrFnQO__NhykedGs4Y6V4ShU7MgPtj"
+        },
+        {
+            "id": 15,
+            "firstName": "Johnny",
+            "lastName": "Depp",
+            "age": 58,
+            "photo": "https://www.gala.fr/imgre/fit/~1~gal~2023~12~05~a1a1a5d8-4c31-49d1-b5d6-f617ccad2cab.jpeg/2697x1956/quality/80/johnny-depp.jpeg"
+        },
+        {
+            "id": 16,
+            "firstName": "Keanu",
+            "lastName": "Reeves",
+            "age": 57,
+            "photo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ8qpiVrthJOtOckTNcSG9-MCfchJDe4CKfd06QcjEZuZAONND0"
+        },
+        {
+            "id": 17,
+            "firstName": "Emma",
+            "lastName": "Watson",
+            "age": 31,
+            "photo": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQNaVy5NQ-aynVusD56DsVBRh5oAJ7H2GHr3dYSJGklITvC300y"
+        },
+        {
+            "id": 18,
+            "firstName": "Tom",
+            "lastName": "Holland",
+            "age": 25,
+            "photo": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSBuKPDoV-RACKldIeB99TVSdpmlFPH2WU2kOKDuUjuLWyYvP2D"
+        }
+    ];
+
+    const container = document.querySelector('.container');
+
+    data.forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const front = document.createElement('div');
+        front.className = 'front';
+        front.innerHTML = `
+                <img src="${item.photo}" alt="Actor Photo" class="actor-photo">
+                <h2>${item.firstName} ${item.lastName}</h2>
+                <p>Age: ${item.age}</p>
+            `;
+
+        const back = document.createElement('div');
+        back.className = 'back';
+        back.innerHTML = `
+                <h2>ID: ${item.id}</h2>
+            `;
+
+        card.appendChild(front);
+        card.appendChild(back);
+        container.appendChild(card);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mongo Data Visualization</title>
+
+</head>
+
+<body>
+<header>
+    <h1>Mongo Data Visualization</h1>
+</header>
+
+<div class="container">
+    <span th:text="${message}"></span>
+</div>
+
+<footer>
+    <p>&copy; 2024 Mongo Data Visualization. All rights reserved.</p>
+</footer>
+
+<script>
+
+/*
+    const container = document.querySelector('.container');
+
+    data.forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const front = document.createElement('div');
+        front.className = 'front';
+        front.innerHTML = `
+                <img src="${item.photo}" alt="Actor Photo" class="actor-photo">
+                <h2>${item.firstName} ${item.lastName}</h2>
+                <p>Age: ${item.age}</p>
+            `;
+
+        const back = document.createElement('div');
+        back.className = 'back';
+        back.innerHTML = `
+                <h2>ID: ${item.id}</h2>
+            `;
+
+        card.appendChild(front);
+        card.appendChild(back);
+        container.appendChild(card);
+    });*/
+</script>
+</body>
+</html>

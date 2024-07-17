@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des acteurs</title>
+    <link rel="stylesheet" href="addform.css">
+</head>
+<body>
+<div class="centered">
+    <h1>List of Actors</h1>
+    <div class="acteurById">
+        <a href="/acteur/getActeurById/">Acteur By Id</a>
+    </div>
+    <div class="add-actor">
+        <a href="/acteur/add">Ajouter un acteur</a>
+    </div>
+    <div class="listeacteurs">
+        <a href="listeacteurs/">Liste des acteurs</a>
+    </div>
+    <div class="acteurById">
+        <a href="/acteur/getActeurById/">Acteur By Id</a>
+    </div>
+</div>
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>Nom</th>-->
+<!--            <th>Prenom</th>-->
+<!--            <th>Photo</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="acteur : ${acteurs}">-->
+<!--            <td th:text="${acteur.id}">1</td>-->
+<!--            <td th:text="${acteur.firstName}">Nom...</td>-->
+<!--            <td th:text="${acteur.lastName}">Prenom...</td>-->
+<!--            <td th:text="${acteur.photo}">Photo...</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<div class="container">
+    <tr th:each="acteur : ${acteurs}">
+
+    <div class="card">
+        <div class="front">
+            <img th:src="${acteur.photo}" class="actor-photo">
+            <h2 th:text=" ${acteur.firstName} +' '+ ${acteur.lastName}">
+            </h2>
+            <p th:text="'Age: ' +  ${acteur.age}"> </p>
+        </div>
+        <div class="back">
+            <h2 th:text="${acteur.id}"></h2>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

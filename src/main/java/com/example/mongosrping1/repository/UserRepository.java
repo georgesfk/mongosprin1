@@ -12,4 +12,6 @@ public interface UserRepository extends MongoRepository<User, Integer> {
     @Query("{'lastnName' :  ?0}")
     @Update("{'$set' : {'age' :  34}}")
     void updateAge (String nom);
+
+
 }
